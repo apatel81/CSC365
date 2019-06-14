@@ -1,0 +1,7 @@
+sec05group02
+group02@sec05
+com.mysql.cj.jdbc.Driver
+jdbc:mysql://csc365.toshikuboi.net:3306/sec05group02
+
+
+apatel81 014299476

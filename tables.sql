@@ -1,0 +1,77 @@
+CREATE TABLE Rooms(
+roomId INT NOT NULL AUTO_INCREMENT,
+roomName VARCHAR(50) NOT NULL,
+bedType VARCHAR(20) NOT NULL,
+numBeds INT NOT NULL,
+maxOcc INT NOT NULL,
+basePrice FLOAT NOT NULL,
+decor VARCHAR(25) NOT NULL,
+PRIMARY KEY (roomId)
+);
+
+CREATE TABLE Customer(
+cId INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+address VARCHAR(100) NOT NULL,
+phone BIGINT(10) NOT NULL,
+PRIMARY KEY (cId)
+);
+
+CREATE TABLE Credit_Card(
+ccn BIGINT(16) NOT NULL,
+type VARCHAR(50) NOT NULL,
+secCode INT NOT NULL,
+expDate DATE NOT NULL, 
+bill_address VARCHAR(100) NOT NULL,
+PRIMARY KEY (ccn)
+);
+
+CREATE TABLE Ownership(
+cId INT NOT NULL,
+ccn BIGINT(16) NOT NULL,
+PRIMARY KEY (cId, ccn),
+FOREIGN KEY(cId) REFERENCES Customer(cId),
+FOREIGN KEY(ccn) REFERENCES Credit_Card(ccn)
+);
+
+CREATE TABLE Reservations (
+resId INT NOT NULL AUTO_INCREMENT,
+cId INT NOT NULL,
+roomId INT NOT NULL,
+checkIn DATE NOT NULL,
+checkOut DATE NOT NULL,
+rate FLOAT NOT NULL,
+numAdults INT NOT NULL,
+numKids INT NOT NULL,
+cancelled TINYINT(1) DEFAULT 0,
+PRIMARY KEY (resId),
+FOREIGN KEY (cId) REFERENCES Customer(cId),
+FOREIGN KEY (roomId) REFERENCES Rooms(roomId)
+);
+
+CREATE TABLE Transaction(
+tId INT NOT NULL AUTO_INCREMENT,
+ccn BIGINT(16) NOT NULL,
+resId INT NOT NULL,
+amountPaid FLOAT NOT NULL,
+datePaid DATE NOT NULL,
+PRIMARY KEY (tId), 
+FOREIGN KEY(ccn) REFERENCES Credit_Card(ccn),
+FOREIGN KEY(resID) REFERENCES Reservations(resId)
+);
+
+
+DELIMITER @
+CREATE TRIGGER `double_reservation_prevention` BEFORE INSERT ON `Reservations`
+FOR EACH ROW
+BEGIN
+   IF (Select COUNT(*) FROM Reservations RE where NEW.roomId = RE.roomId and RE.checkIn < NEW.checkOut AND RE.checkout > NEW.checkIn ) <> 0
+      THEN SIGNAL SQLSTATE '12345'
+      SET MESSAGE_TEXT = 'Overlapping Reservation';
+   END IF;
+
+END@
+DELIMITER ;
+
+
+

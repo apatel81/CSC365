@@ -1,0 +1,6 @@
+DROP Table Transaction;
+DROP TABLE Reservations;
+DROP TABLE Rooms;
+DROP TABLE Ownership;
+DROP TABLE Credit_Card;
+DROP TABLE Customer;

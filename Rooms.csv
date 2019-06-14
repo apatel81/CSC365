@@ -1,0 +1,11 @@
+roomId, roomName, bedType, numBeds, maxOcc, basePrice, decor
+1, 'Traditional','King',1,3,99.99,'Modern'
+2,'Ancient','Double',2,5,109.99,'Rustic'
+3,'Coastal','Queen',2,4,105.99,'Modern'
+4,Habitat',Double',2,5,109.99,Modern'
+5,Woodland',Queen',2,4,119.99,Modern'
+6,Superior',King',3,6,299.99,Modern'
+7,Hobit Hole',Double',1,1,59.99,Rustic'
+8,River',Queen',2,4,129.99,Modern'
+9,Urban',Queen',2,4,129.99,Rustic'
+10,Industrial',Double',3,3,159.99,Rustic'

@@ -1,0 +1,28 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;}
+{\*\expandedcolortbl;;\csgray\c0;\csgray\c100000;}
+\margl1440\margr1440\vieww20240\viewh6980\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \CocoaLigature0 Name: Ajay Patel\
+CSC 365-05\
+Kuboi\
+Project 1 Question 5 Queries\
+\
+a) select first, last  from Player where id in  (select player_id from Event where type = "Goals Scored" and count = 3);\
+\
+b) select name  from Team where id in (select team_id  from Player where id in  (select player_id from Event where type = "Goals Scored"   \
+   and count = 3));\
+\
+c) select name  from Team where id in (select home_team_id as id from Game where score_home >= 3 UNION select away_team_id as id from Game \
+   where score_away >= 3);\
+\
+d) select max(total_wins), team_id, name from (select home_count + away_count as total_wins, team_id from (select home_team_id as team_id, count(*) as \
+   home_count from Game where score_home > score_away group by home_team_id) as A  JOIN (select away_team_id, count(*) as away_count from Game where  \
+   score_away > score_home group by away_team_id) as B ON A.team_id = B.away_team_id order by total_wins DESC) as C left join (select * from Team) as D \
+   on C.team_id = D.id;\
+\
+e) select game_id, date, home_team_id, away_team_id, score_home, score_away, name as "Team that Beat the Champion", id from (select * from Game where \
+   home_team_id = 1 and score_home < score_away UNION select * from Game where away_team_id = 1 and score_away < score_home) as A left join (select *   \
+   from Team) as B on A.home_team_id = B.id;}
